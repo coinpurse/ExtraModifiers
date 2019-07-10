@@ -1,5 +1,5 @@
 ﻿using Loot;
-using TestMod.Modifiers;
+using ExtraModifiers.Modifiers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Loot.Modifiers.WeaponModifiers;
 
-namespace TestMod.Projectiles
+namespace ExtraModifiers.Projectiles
 {
     class ProjectileModifiers : Terraria.ModLoader.GlobalProjectile
     {

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Loot;
 
-namespace TestMod.Modifiers
+namespace ExtraModifiers.Modifiers
 {
     public class ReactiveArmorEffect : ModifierEffect
     {

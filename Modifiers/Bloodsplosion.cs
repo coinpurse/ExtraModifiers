@@ -1,4 +1,4 @@
-﻿using TestMod.Projectiles;
+﻿using ExtraModifiers.Projectiles;
 using Loot;
 using Loot.Core;
 using Loot.Core.Attributes;
@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System.Linq;
 
-namespace TestMod.Modifiers
+namespace ExtraModifiers.Modifiers
 {
     public class BloodsplosionEffect : ModifierEffect
     {

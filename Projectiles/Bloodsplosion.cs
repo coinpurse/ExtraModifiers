@@ -5,7 +5,7 @@ using Terraria.GameContent.Achievements;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace TestMod.Projectiles
+namespace ExtraModifiers.Projectiles
 {
     class Bloodsplosion : ModProjectile
     {
