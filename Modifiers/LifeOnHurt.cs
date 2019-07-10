@@ -38,7 +38,6 @@ namespace ExtraModifiers.Modifiers
                 isActive = true;
                 savedDamage = damage;
                 delay = 0;
-                Main.NewText(amountToHeal().ToString(), 155, 155, 155);
             }
         }
 
@@ -50,7 +49,6 @@ namespace ExtraModifiers.Modifiers
                 delay++;
                 if(delay > 180)
                 {
-                    Main.NewText(amountToHeal().ToString(), 155, 155, 155);
                     isActive = false;
                     delay = 0;
                     player.player.statLife += amountToHeal();
