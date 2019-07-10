@@ -1,0 +1,10 @@
+author = Coinpurse
+version = 0.1
+displayName = Example Mod
+languageVersion = 6
+hideCode = false
+hideResources = false
+includeSource = true
+buildIgnore = *.csproj, *.user, obj\*, bin\*, .vs\*
+includePDB = false
+modReferences = Loot
