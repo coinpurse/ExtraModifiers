@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 using Terraria;
 
-namespace Loot.Modifiers.WeaponModifiers
+namespace ExtraModifiers.Modifiers
 {
     public class SatansAceEffect : ModifierEffect
     {

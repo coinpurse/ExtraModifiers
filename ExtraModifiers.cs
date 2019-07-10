@@ -3,11 +3,11 @@ using Microsoft.Xna.Framework;
 using Loot;
 using Terraria.ModLoader;
 
-namespace TestMod
+namespace ExtraModifiers
 {
-    class TestMod : Mod
+    class ExtraModifiers : Mod
     {
-        public TestMod()
+        public ExtraModifiers()
         {
         }
 

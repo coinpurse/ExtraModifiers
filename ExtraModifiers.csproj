@@ -39,7 +39,7 @@
     <Compile Include="PlayerEffects.cs" />
     <Compile Include="Projectiles\Bloodsplosion.cs" />
     <Compile Include="Projectiles\ProjectileModifiers.cs" />
-    <Compile Include="TestMod.cs" />
+    <Compile Include="ExtraModifiers.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Loot">
