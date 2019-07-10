@@ -34,6 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Modifiers\Bloodsplosion.cs" />
+    <Compile Include="Modifiers\LifeOnHurt.cs" />
     <Compile Include="Modifiers\ReactiveArmor.cs" />
     <Compile Include="Modifiers\SatansAce.cs" />
     <Compile Include="PlayerEffects.cs" />
