@@ -88,7 +88,6 @@ namespace TestMod.Modifiers
             {
                 numOfKills = 0;
                NPCs.ExtraModifiersNPC.spawnMultiplier += .25f;
-                Main.NewText(NPCs.ExtraModifiersNPC.spawnMultiplier.ToString(), 155, 155, 155);
             }
         }
     }
