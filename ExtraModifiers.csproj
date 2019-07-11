@@ -35,8 +35,10 @@
   <ItemGroup>
     <Compile Include="Modifiers\Bloodsplosion.cs" />
     <Compile Include="Modifiers\LifeOnHurt.cs" />
+    <Compile Include="Modifiers\Rampage.cs" />
     <Compile Include="Modifiers\ReactiveArmor.cs" />
     <Compile Include="Modifiers\SatansAce.cs" />
+    <Compile Include="NPCs\ExtraModifiersNPC.cs" />
     <Compile Include="PlayerEffects.cs" />
     <Compile Include="Projectiles\Bloodsplosion.cs" />
     <Compile Include="Projectiles\ProjectileModifiers.cs" />
@@ -67,6 +69,7 @@
       <HintPath>C:\Program Files (x86)\Steam\steamapps\common\terraria\Terraria.exe</HintPath>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>"C:\Program Files (x86)\Steam\steamapps\common\terraria\tModLoaderServer.exe" -build "$(ProjectDir)\" -eac "$(TargetPath)"</PostBuildEvent>
