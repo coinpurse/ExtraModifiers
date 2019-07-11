@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework;
 
 namespace TestMod.Modifiers
 {
-    class RampageEffect : ModifierEffect
+    class BloodthirstyEffect : ModifierEffect
     {
         public bool isActive;
         public int numOfKills;
@@ -28,7 +28,7 @@ namespace TestMod.Modifiers
         }
 
         [AutoDelegation("OnOnHitNPC")]
-        public void Rampage_OnHitNPC(ModifierPlayer player, Item item, NPC target, int damage, float knockback, bool crit)
+        public void Bloodthirsty_OnHitNPC(ModifierPlayer player, Item item, NPC target, int damage, float knockback, bool crit)
         {
             if (target.life <= 0 && isActive)
             {
@@ -37,7 +37,7 @@ namespace TestMod.Modifiers
         }
 
         [AutoDelegation("OnPostUpdateEquips")]
-        private void HasRampage(ModifierPlayer player)
+        private void HasBloodthirsty(ModifierPlayer player)
         {
             Item checkItem = player.player.HeldItem;
 
@@ -45,7 +45,7 @@ namespace TestMod.Modifiers
             {
                 if (ActivatedModifierItem.Item(checkItem).IsActivated)
                 {
-                    int c = EMMItem.GetActivePool(checkItem).Count(x => x.GetType() == typeof(Rampage));
+                    int c = EMMItem.GetActivePool(checkItem).Count(x => x.GetType() == typeof(Bloodthirsty));
                     if (c > 0)
                     {
                         isActive = true;
@@ -63,7 +63,7 @@ namespace TestMod.Modifiers
         }
 
         [AutoDelegation("OnPreUpdate")]
-        private void Rampage_OnPreUpdate(ModifierPlayer player)
+        private void Bloodthirsty_OnPreUpdate(ModifierPlayer player)
         {
             if (isActive) { 
                 rampageDuration++;
@@ -88,16 +88,17 @@ namespace TestMod.Modifiers
             {
                 numOfKills = 0;
                NPCs.ExtraModifiersNPC.spawnMultiplier += .25f;
+                Main.NewText(NPCs.ExtraModifiersNPC.spawnMultiplier.ToString(), 155, 155, 155);
             }
         }
     }
 
-    [UsesEffect(typeof(RampageEffect))]
-    class Rampage : WeaponModifier
+    [UsesEffect(typeof(BloodthirstyEffect))]
+    class Bloodthirsty : WeaponModifier
     {
         public override ModifierTooltipLine[] TooltipLines => new[]
         {
-            new ModifierTooltipLine {Text = $"Rampage", Color = Color.Red}
+            new ModifierTooltipLine {Text = $"Bloodthirsty", Color = Color.Red}
         };
 
         public override ModifierProperties GetModifierProperties(Item item)

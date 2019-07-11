@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using Loot.Modifiers.WeaponModifiers;
+using TestMod.Modifiers;
 
 namespace ExtraModifiers.Projectiles
 {
@@ -15,9 +16,6 @@ namespace ExtraModifiers.Projectiles
     {
         public override bool InstancePerEntity => true;
 
-        public bool bloodsplosion_isActive = false;
-        public float bloodsplosion_multiplier = 1f;
-        public bool satansAce_isActive = false;
 
 
         public bool NeedsClear;
@@ -38,21 +36,12 @@ namespace ExtraModifiers.Projectiles
             {
                 mproj.FirstTick = true;
 
-                // Snapshot current player values
+                // Get effect values
                 if (projectile.owner != 255 && projectile.friendly && projectile.owner == Main.myPlayer)
                 {
                     mplr = Main.LocalPlayer.GetModPlayer<ModifierPlayer>();
-                    mproj.bloodsplosion_multiplier = mplr.GetEffect<BloodsplosionEffect>().Multiplier;
-                    mproj.bloodsplosion_isActive = mplr.GetEffect<BloodsplosionEffect>().isActive;
-                    mproj.satansAce_isActive = mplr.GetEffect<SatansAceEffect>().isActive;
                 }
 
-            }
-            if (NeedsClear)
-            {
-                mproj.bloodsplosion_multiplier = 1f;
-                mproj.bloodsplosion_isActive = false;
-                mproj.satansAce_isActive = false;
             }
             return base.PreAI(projectile);
         }
@@ -72,6 +61,7 @@ namespace ExtraModifiers.Projectiles
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
         {
             Bloodsplode(target, damage);
+            Bloodthirsty(target);
             base.OnHitNPC(projectile, target, damage, knockback, crit);
         }
 
@@ -81,24 +71,32 @@ namespace ExtraModifiers.Projectiles
             base.OnHitPlayer(projectile, target, damage, crit);
         }
 
+        public void Bloodthirsty(NPC target)
+        {
+            if (target.life <= 0 && mplr.GetEffect<BloodthirstyEffect>().isActive)
+            {
+                mplr.GetEffect<BloodthirstyEffect>().StartRampage();
+            }
+        }
+
         public void Bloodsplode(NPC target, int damage)
         {
-            if (target.life <= 0 && bloodsplosion_isActive)
+            if (target.life <= 0 && mplr.GetEffect<BloodsplosionEffect>().isActive)
             {
-                mplr.player.GetModPlayer<PlayerEffects>().createBloodplosion(target.position.X, target.position.Y, (int)(damage * bloodsplosion_multiplier));
+                mplr.player.GetModPlayer<PlayerEffects>().createBloodplosion(target.position.X, target.position.Y, (int)(damage * mplr.GetEffect<BloodsplosionEffect>().Multiplier));
             }
         }
 
         public void Bloodsplode(Player target, int damage)
         {
-            if (target.statLife <= 0 && bloodsplosion_isActive)
+            if (target.statLife <= 0 && mplr.GetEffect<BloodsplosionEffect>().isActive)
             {
-                mplr.player.GetModPlayer<PlayerEffects>().createBloodplosion(target.position.X, target.position.Y, (int)(damage * bloodsplosion_multiplier));
+                mplr.player.GetModPlayer<PlayerEffects>().createBloodplosion(target.position.X, target.position.Y, (int)(damage * mplr.GetEffect<BloodsplosionEffect>().Multiplier));
             }
         }
         public void SatansAce(Projectile proj, ref int damage, NPC target)
         {
-            if (satansAce_isActive)
+            if (mplr.GetEffect<SatansAceEffect>().isActive)
             {
                 int i = mplr.GetEffect<SatansAceEffect>().rand.Next(100);
                 if (i < 6)
@@ -111,7 +109,7 @@ namespace ExtraModifiers.Projectiles
 
         public void SatansAce(Projectile proj, ref int damage, Player target)
         {
-            if (satansAce_isActive)
+            if (mplr.GetEffect<SatansAceEffect>().isActive)
             {
                 int i = mplr.GetEffect<SatansAceEffect>().rand.Next(100);
                 if (i < 6)
