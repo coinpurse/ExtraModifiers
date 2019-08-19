@@ -36,6 +36,7 @@
     <Compile Include="Modifiers\Bloodsplosion.cs" />
     <Compile Include="Modifiers\LifeOnHurt.cs" />
     <Compile Include="Modifiers\Bloodthirsty.cs" />
+    <Compile Include="Modifiers\PercentGold.cs" />
     <Compile Include="Modifiers\ReactiveArmor.cs" />
     <Compile Include="Modifiers\SatansAce.cs" />
     <Compile Include="NPCs\ExtraModifiersNPC.cs" />
