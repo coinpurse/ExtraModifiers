@@ -38,7 +38,6 @@ namespace TestMod.Modifiers
         {
             if (isActive == true)
             {
-                Main.NewText(percentGold.ToString(), 155, 155, 155);
                 target.value = target.value + (target.value * percentGold);
             }
         }
@@ -64,7 +63,7 @@ namespace TestMod.Modifiers
 
         public override void UpdateEquip(Item item, Player player)
         {
-            ModifierPlayer.Player(player).GetEffect<PercentGoldEffect>().percentGold += Properties.RoundedPower / 1f;
+            ModifierPlayer.Player(player).GetEffect<PercentGoldEffect>().percentGold += Properties.RoundedPower / 100f;
             ModifierPlayer.Player(player).GetEffect<PercentGoldEffect>().isActive = true;
         }
     }

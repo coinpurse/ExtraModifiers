@@ -63,7 +63,7 @@ namespace TestMod.Modifiers
 
         public override void UpdateEquip(Item item, Player player)
         {
-            ModifierPlayer.Player(player).GetEffect<PercentBossDamageEffect>().percentBossDamage += Properties.RoundedPower / 1f;
+            ModifierPlayer.Player(player).GetEffect<PercentBossDamageEffect>().percentBossDamage += Properties.RoundedPower / 100f;
             ModifierPlayer.Player(player).GetEffect<PercentBossDamageEffect>().isActive = true;
         }
     }
