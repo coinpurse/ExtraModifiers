@@ -30,10 +30,7 @@ namespace TestMod.Modifiers
         [AutoDelegation("OnOnHitNPC")]
         public void Bloodthirsty_OnHitNPC(ModifierPlayer player, Item item, NPC target, int damage, float knockback, bool crit)
         {
-            if (target.life <= 0 && isActive)
-            {
-                StartRampage();
-            }
+                StartRampage(target);
         }
 
         [AutoDelegation("OnPostUpdateEquips")]
@@ -80,14 +77,17 @@ namespace TestMod.Modifiers
             }
         }
 
-        public void StartRampage()
+        public void StartRampage(NPC target)
         {
-            numOfKills++;
-            rampageDuration = 0;
-            if (numOfKills >= 5)
+            if (target.life <= 0 && isActive)
             {
-                numOfKills = 0;
-               NPCs.ExtraModifiersNPC.spawnMultiplier += .25f;
+                numOfKills++;
+                rampageDuration = 0;
+                if (numOfKills >= 5)
+                {
+                    numOfKills = 0;
+                    NPCs.ExtraModifiersNPC.spawnMultiplier += .25f;
+                }
             }
         }
     }

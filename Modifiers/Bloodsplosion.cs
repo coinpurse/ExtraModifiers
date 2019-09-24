@@ -57,24 +57,29 @@ namespace ExtraModifiers.Modifiers
         [AutoDelegation("OnOnHitNPC")]
         public void Bloodplosion_OnHitNPC(ModifierPlayer player, Item item, NPC target, int damage, float knockback, bool crit)
         {
-            if (target.life <= 0 && isActive)
-            {
-                Bloodsplode((int)(Multiplier * damage), player, target.position.X, target.position.Y);
-            }
+                Bloodsplode(damage, player, target);
         }
 
         [AutoDelegation("OnOnHitPVP")]
         public void Bloodplosion_OnHitPVP(ModifierPlayer player, Item item, Player target, int damage, float knockback, bool crit)
         {
-            if (target.statLife <= 0 && isActive)
+            Bloodsplode(damage, player, target);
+        }
+
+        public void Bloodsplode(int damage, ModifierPlayer player, NPC target)
+        {
+            if (target.life <= 0 && isActive)
             {
-                Bloodsplode((int)(Multiplier * damage), player, target.position.X, target.position.Y);
+                player.player.GetModPlayer<PlayerEffects>().createBloodplosion(target.position.X, target.position.Y, damage);
             }
         }
 
-        private void Bloodsplode(int damage, ModifierPlayer player, float X, float Y)
+        public void Bloodsplode(int damage, ModifierPlayer player, Player target)
         {
-            player.player.GetModPlayer<PlayerEffects>().createBloodplosion(X, Y, damage);
+            if (target.statLife <= 0 && isActive)
+            {
+                player.player.GetModPlayer<PlayerEffects>().createBloodplosion(target.position.X, target.position.Y, (int)Math.Ceiling(damage * Multiplier));
+            }
         }
 
     }

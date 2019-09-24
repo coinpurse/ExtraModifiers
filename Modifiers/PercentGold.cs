@@ -28,16 +28,20 @@ namespace TestMod.Modifiers
             isActive = false;
         }
 
-        [AutoDelegation("OnOnHitNPC")]
-        private void PercentGold_OnPostHurt(ModifierPlayer player, Item item, NPC target, int damage, float knockback, bool crit)
+        [AutoDelegation("OnModifyHitNPC")]
+        private void PercentGold_OnModifyHurt(ModifierPlayer player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
         {
-            if(target.statLife <= 0 && isActive == true)
-            {
-                // Make the NPC drop more gold
-            }
+            setPercentGold(target);
         }
 
-
+        public void setPercentGold(NPC target)
+        {
+            if (isActive == true)
+            {
+                Main.NewText(percentGold.ToString(), 155, 155, 155);
+                target.value = target.value + (target.value * percentGold);
+            }
+        }
     }
 
     [UsesEffect(typeof(PercentGoldEffect))]
@@ -60,7 +64,8 @@ namespace TestMod.Modifiers
 
         public override void UpdateEquip(Item item, Player player)
         {
-            ModifierPlayer.Player(player).GetEffect<PercentGoldEffect>().percentGold += Properties.RoundedPower / 100f;
+            ModifierPlayer.Player(player).GetEffect<PercentGoldEffect>().percentGold += Properties.RoundedPower / 1f;
+            ModifierPlayer.Player(player).GetEffect<PercentGoldEffect>().isActive = true;
         }
     }
 }

@@ -46,18 +46,22 @@ namespace ExtraModifiers.Projectiles
             return base.PreAI(projectile);
         }
         
+        //ModifyHit Overrides
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
-            SatansAce(projectile, ref damage, target);
+            SatansAce(ref damage);
+            PercentGold(target);
+            PercentBossDamage(target, ref damage);
             base.ModifyHitNPC(projectile, target, ref damage, ref knockback, ref crit, ref hitDirection);
         }
 
         public override void ModifyHitPvp(Projectile projectile, Player target, ref int damage, ref bool crit)
         {
-            SatansAce(projectile, ref damage, target);
+            SatansAce(ref damage);
             base.ModifyHitPvp(projectile, target, ref damage, ref crit);
         }
 
+        //OnHit overrides
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit)
         {
             Bloodsplode(target, damage);
@@ -71,53 +75,43 @@ namespace ExtraModifiers.Projectiles
             base.OnHitPlayer(projectile, target, damage, crit);
         }
 
+        //################################################################################################################
+
+        //PercentBossDamage call - PvE
+        public void PercentBossDamage(NPC target, ref int damage)
+        {
+            mplr.GetEffect<PercentBossDamageEffect>().setBossDamage(target, ref damage);
+        }
+
+        //PercentGold call - PvE
+        public void PercentGold(NPC target)
+        {
+            mplr.GetEffect<PercentGoldEffect>().setPercentGold(target);
+        }
+
+        //Satan's Ace call - PvE & PvP
+        public void SatansAce(ref int damage)
+        {
+            mplr.GetEffect<SatansAceEffect>().AceEffect(mplr, ref damage);
+        }
+
+        //Bloodthirsty call - PvE
         public void Bloodthirsty(NPC target)
         {
-            if (target.life <= 0 && mplr.GetEffect<BloodthirstyEffect>().isActive)
-            {
-                mplr.GetEffect<BloodthirstyEffect>().StartRampage();
-            }
+                mplr.GetEffect<BloodthirstyEffect>().StartRampage(target);
         }
 
+        //Bloodplosion call - PvE
         public void Bloodsplode(NPC target, int damage)
         {
-            if (target.life <= 0 && mplr.GetEffect<BloodsplosionEffect>().isActive)
-            {
-                mplr.player.GetModPlayer<PlayerEffects>().createBloodplosion(target.position.X, target.position.Y, (int)(damage * mplr.GetEffect<BloodsplosionEffect>().Multiplier));
-            }
+            mplr.GetEffect<BloodsplosionEffect>().Bloodsplode(damage, mplr, target);
         }
 
+        //Bloodplosion call - PvP
         public void Bloodsplode(Player target, int damage)
         {
-            if (target.statLife <= 0 && mplr.GetEffect<BloodsplosionEffect>().isActive)
-            {
-                mplr.player.GetModPlayer<PlayerEffects>().createBloodplosion(target.position.X, target.position.Y, (int)(damage * mplr.GetEffect<BloodsplosionEffect>().Multiplier));
-            }
-        }
-        public void SatansAce(Projectile proj, ref int damage, NPC target)
-        {
-            if (mplr.GetEffect<SatansAceEffect>().isActive)
-            {
-                int i = mplr.GetEffect<SatansAceEffect>().rand.Next(100);
-                if (i < 6)
-                {
-                    mplr.player.statLife -= (int)(mplr.player.statLife * 0.5);
-                    damage = damage * 5;
-                }
-            }
+            mplr.GetEffect<BloodsplosionEffect>().Bloodsplode(damage, mplr, target);
         }
 
-        public void SatansAce(Projectile proj, ref int damage, Player target)
-        {
-            if (mplr.GetEffect<SatansAceEffect>().isActive)
-            {
-                int i = mplr.GetEffect<SatansAceEffect>().rand.Next(100);
-                if (i < 6)
-                {
-                    mplr.player.statLife -= (int)(mplr.player.statLife * 0.5);
-                    damage = damage * 5;
-                }
-            }
-        }
     }
 }

@@ -28,19 +28,19 @@ namespace TestMod.Modifiers
             isActive = false;
         }
 
-        [AutoDelegation("OnOnHitNPC")]
-        private void PercentGold_OnPostHurt(ModifierPlayer player, Item item, NPC target, int damage, float knockback, bool crit)
+        [AutoDelegation("OnModifyHitNPC")]
+        private void PercentBossDamage_OnModify(ModifierPlayer player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
         {
-            /* TODO
-             * Add boss condition to condition statement
-            if (isActive == true)
-            {
-                // Increase the damage dealt
-            }
-            */
+            setBossDamage(target, ref damage);
         }
 
-
+        public void setBossDamage(NPC target, ref int damage)
+        {
+            if (isActive == true && target.boss == true)
+            {
+                damage = damage + (int)Math.Ceiling(damage * percentBossDamage);
+            }
+        }
     }
 
     [UsesEffect(typeof(PercentBossDamageEffect))]
@@ -63,7 +63,8 @@ namespace TestMod.Modifiers
 
         public override void UpdateEquip(Item item, Player player)
         {
-            ModifierPlayer.Player(player).GetEffect<PercentBossDamageEffect>().percentGold += Properties.RoundedPower / 100f;
+            ModifierPlayer.Player(player).GetEffect<PercentBossDamageEffect>().percentBossDamage += Properties.RoundedPower / 1f;
+            ModifierPlayer.Player(player).GetEffect<PercentBossDamageEffect>().isActive = true;
         }
     }
 }

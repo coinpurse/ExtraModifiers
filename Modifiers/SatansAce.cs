@@ -66,13 +66,15 @@ namespace ExtraModifiers.Modifiers
             AceEffect(player, ref damage);
         }
 
-        private void AceEffect(ModifierPlayer player, ref int damage)
+        public void AceEffect(ModifierPlayer player, ref int damage)
         {
-            int i = rand.Next(100);
-            if (i < 6)
-            {
-                player.player.statLife -= (int)(player.player.statLife * 0.5);
-                damage = damage * 5;
+            if (isActive) { 
+               int i = rand.Next(100);
+               if (i < 6)
+               {
+                    player.player.statLife -= (int)(player.player.statLife * 0.5);
+                    damage = damage * 5;
+               }
             }
         }
     }
