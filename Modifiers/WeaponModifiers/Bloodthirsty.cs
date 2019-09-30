@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 using Loot;
 using Loot.Core.Attributes;
 using Microsoft.Xna.Framework;
+using TestMod.NPCs;
 
-namespace TestMod.Modifiers
+namespace ExtraModifiers.Modifiers.WeaponModifiers
 {
     class BloodthirstyEffect : ModifierEffect
     {
@@ -67,13 +68,13 @@ namespace TestMod.Modifiers
                 if (rampageDuration > 900)
                 {
                     rampageDuration = 0;
-                    NPCs.ExtraModifiersNPC.resetSpawnRate();
+                    ExtraModifiersNPC.resetSpawnRate();
                  }
              }
             else
             {
                 rampageDuration = 0;
-                NPCs.ExtraModifiersNPC.resetSpawnRate();
+                ExtraModifiersNPC.resetSpawnRate();
             }
         }
 
@@ -86,7 +87,7 @@ namespace TestMod.Modifiers
                 if (numOfKills >= 5)
                 {
                     numOfKills = 0;
-                    NPCs.ExtraModifiersNPC.spawnMultiplier += .25f;
+                    ExtraModifiersNPC.spawnMultiplier += .25f;
                 }
             }
         }

@@ -10,7 +10,7 @@ using Terraria;
 using Microsoft.Xna.Framework;
 using Loot.Core.Attributes;
 
-namespace ExtraModifiers.Modifiers
+namespace ExtraModifiers.Modifiers.ArmorModifiers
 {
 
     class LifeOnHurtEffect : ModifierEffect

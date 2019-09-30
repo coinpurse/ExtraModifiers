@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using System.Linq;
 
-namespace ExtraModifiers.Modifiers
+namespace ExtraModifiers.Modifiers.WeaponModifiers
 {
     public class BloodsplosionEffect : ModifierEffect
     {

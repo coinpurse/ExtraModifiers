@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Loot;
 
-namespace ExtraModifiers.Modifiers
+namespace ExtraModifiers.Modifiers.ArmorModifiers
 {
     public class ReactiveArmorEffect : ModifierEffect
     {
@@ -27,6 +27,8 @@ namespace ExtraModifiers.Modifiers
         {
             MaxStack = 0;
         }
+
+
          
         [AutoDelegation("OnPostHurt")]
         private void ReactiveArmor_OnPostHurt(ModifierPlayer player, bool pvp, bool quiet, double damage, int hitDirection, bool crit)

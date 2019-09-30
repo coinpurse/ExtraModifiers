@@ -10,7 +10,7 @@ using Terraria;
 using Microsoft.Xna.Framework;
 using Loot.Core.Attributes;
 
-namespace TestMod.Modifiers
+namespace ExtraModifiers.Modifiers.AccessoryModifiers
 {
     class PercentGoldEffect : ModifierEffect
     {

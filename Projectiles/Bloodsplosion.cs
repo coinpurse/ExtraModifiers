@@ -50,7 +50,7 @@ namespace ExtraModifiers.Projectiles
         }
         public override void Kill(int timeLeft)
         {
-            Main.PlaySound(SoundID.Item15, projectile.position);
+            Main.PlaySound(SoundID.Item14, projectile.position);
 
             // Smoke Dust spawn
             for (int i = 0; i < 50; i++)

@@ -1,5 +1,4 @@
 ﻿using Loot;
-using ExtraModifiers.Modifiers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,9 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using Loot.Modifiers.WeaponModifiers;
-using TestMod.Modifiers;
+using ExtraModifiers.Modifiers.AccessoryModifiers;
+using ExtraModifiers.Modifiers.WeaponModifiers;
+using ExtraModifiers.Modifiers.ArmorModifiers;
 
 namespace ExtraModifiers.Projectiles
 {
