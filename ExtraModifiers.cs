@@ -13,6 +13,7 @@ namespace ExtraModifiers
 
         public override void Load()
         {
+            
             EMMLoader.RegisterMod(this);
             EMMLoader.SetupContent(this);
         }

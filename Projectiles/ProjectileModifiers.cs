@@ -10,6 +10,7 @@ using Loot.Modifiers.WeaponModifiers;
 using ExtraModifiers.Modifiers.AccessoryModifiers;
 using ExtraModifiers.Modifiers.WeaponModifiers;
 using ExtraModifiers.Modifiers.ArmorModifiers;
+using Microsoft.Xna.Framework;
 
 namespace ExtraModifiers.Projectiles
 {
@@ -21,8 +22,9 @@ namespace ExtraModifiers.Projectiles
 
         public bool NeedsClear;
         public bool FirstTick;
-        
+        public bool isShadow;
         ModifierPlayer mplr;
+        PlayerEffects mplreffects;
        
         public ProjectileModifiers Info(Projectile projectile, Mod mod = null)
             => mod == null
@@ -41,12 +43,22 @@ namespace ExtraModifiers.Projectiles
                 if (projectile.owner != 255 && projectile.friendly && projectile.owner == Main.myPlayer)
                 {
                     mplr = Main.LocalPlayer.GetModPlayer<ModifierPlayer>();
+                    mplreffects = Main.LocalPlayer.GetModPlayer<PlayerEffects>();
+
+                    if (mplr.GetEffect<ShadowPartnerEffect>().isActive && !mplreffects.initializeShadowProjectile)
+                    {
+                        mplreffects.initializeShadowProjectile = true;
+                        Main.LocalPlayer.GetModPlayer<PlayerEffects>().createShadowProjectile(projectile);
+                    }
+                    else
+                        mplreffects.initializeShadowProjectile = false;
                 }
 
             }
+
             return base.PreAI(projectile);
         }
-        
+
         //ModifyHit Overrides
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection)
         {
@@ -113,6 +125,5 @@ namespace ExtraModifiers.Projectiles
         {
             mplr.GetEffect<BloodsplosionEffect>().Bloodsplode(damage, mplr, target);
         }
-
     }
 }

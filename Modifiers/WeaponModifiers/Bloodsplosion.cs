@@ -70,7 +70,7 @@ namespace ExtraModifiers.Modifiers.WeaponModifiers
         {
             if (target.life <= 0 && isActive)
             {
-                player.player.GetModPlayer<PlayerEffects>().createBloodplosion(target.position.X, target.position.Y, damage);
+                player.player.GetModPlayer<PlayerEffects>().CreateBloodplosion(target.position.X, target.position.Y, damage);
             }
         }
 
@@ -78,7 +78,7 @@ namespace ExtraModifiers.Modifiers.WeaponModifiers
         {
             if (target.statLife <= 0 && isActive)
             {
-                player.player.GetModPlayer<PlayerEffects>().createBloodplosion(target.position.X, target.position.Y, (int)Math.Ceiling(damage * Multiplier));
+                player.player.GetModPlayer<PlayerEffects>().CreateBloodplosion(target.position.X, target.position.Y, (int)Math.Ceiling(damage * Multiplier));
             }
         }
 

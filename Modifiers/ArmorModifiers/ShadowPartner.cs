@@ -15,6 +15,7 @@ namespace ExtraModifiers.Modifiers.ArmorModifiers
     class ShadowPartnerEffect : ModifierEffect
     {
         public int Stack;
+        public bool isActive;
 
         public override void OnInitialize(ModifierPlayer player)
         {
@@ -31,12 +32,12 @@ namespace ExtraModifiers.Modifiers.ArmorModifiers
         {
             if (Stack == 3)
             {
-                player.player.GetModPlayer<PlayerEffects>().enableShadowPartner();
+                isActive = true;
             }
             else
-                player.player.GetModPlayer<PlayerEffects>().disableShadowPartner();
+                isActive = false;
+            player.player.GetModPlayer<PlayerEffects>().setHasShadowPartner(isActive);
         }
-
     }
 
     [UsesEffect(typeof(ShadowPartnerEffect))]

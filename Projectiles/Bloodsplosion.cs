@@ -15,7 +15,6 @@ namespace ExtraModifiers.Projectiles
             projectile.height = 0;
             projectile.friendly = true;
             projectile.penetrate = -1;
-
             projectile.timeLeft = 15;
 
             drawOffsetX = 5;
@@ -48,6 +47,7 @@ namespace ExtraModifiers.Projectiles
                 Projectile.NewProjectile(target.position.X, target.position.Y, 0, 0, mod.ProjectileType("Bloodsplosion"), damage, 0f, Main.myPlayer);
             }
         }
+        
         public override void Kill(int timeLeft)
         {
             Main.PlaySound(SoundID.Item14, projectile.position);
@@ -99,5 +99,6 @@ namespace ExtraModifiers.Projectiles
             projectile.position.Y = projectile.position.Y - (float)(projectile.height / 2);
 
         }
+        
     }
 }
