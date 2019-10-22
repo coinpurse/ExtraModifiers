@@ -11,17 +11,14 @@ namespace ExtraModifiers.Modifiers.WeaponModifiers
 {
     public class SatansAceEffect : ModifierEffect
     {
-        public Random rand;
         public bool isActive;
 
         public override void OnInitialize(ModifierPlayer player)
         {
-            rand = new Random();
         }
 
         public override void ResetEffects(ModifierPlayer player)
         {
-            rand = new Random();
             isActive = false;
         }
 
@@ -34,7 +31,7 @@ namespace ExtraModifiers.Modifiers.WeaponModifiers
             {
                 if (ActivatedModifierItem.Item(checkItem).IsActivated)
                 {
-                    int c = EMMItem.GetActivePool(checkItem).Count(x => x.GetType() == typeof(SatansAce ));
+                    int c = EMMItem.GetActivePool(checkItem).Count(x => x.GetType() == typeof(SatansAce));
                     if (c > 0)
                     {
                         isActive = true;
@@ -69,8 +66,7 @@ namespace ExtraModifiers.Modifiers.WeaponModifiers
         public void AceEffect(ModifierPlayer player, ref int damage)
         {
             if (isActive) { 
-               int i = rand.Next(100);
-               if (i < 6)
+               if (Main.rand.Next(20) == 0)   // 1 in 20
                {
                     player.player.statLife -= (int)(player.player.statLife * 0.5);
                     damage = damage * 5;

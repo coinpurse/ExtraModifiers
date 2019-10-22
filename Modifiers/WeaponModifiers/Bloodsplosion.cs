@@ -16,16 +16,13 @@ namespace ExtraModifiers.Modifiers.WeaponModifiers
     public class BloodsplosionEffect : ModifierEffect
     {
 
-        public float Multiplier;
         public bool isActive;
         public override void OnInitialize(ModifierPlayer player)
         {
-            Multiplier = 1f;
         }
 
         public override void ResetEffects(ModifierPlayer player)
         {
-            Multiplier = 1f;
             isActive = false;
         }
 
@@ -78,7 +75,7 @@ namespace ExtraModifiers.Modifiers.WeaponModifiers
         {
             if (target.statLife <= 0 && isActive)
             {
-                player.player.GetModPlayer<PlayerEffects>().CreateBloodplosion(target.position.X, target.position.Y, (int)Math.Ceiling(damage * Multiplier));
+                player.player.GetModPlayer<PlayerEffects>().CreateBloodplosion(target.position.X, target.position.Y, damage);
             }
         }
 
@@ -88,7 +85,7 @@ namespace ExtraModifiers.Modifiers.WeaponModifiers
     {
         public override ModifierTooltipLine[] TooltipLines => new[]
         {
-            new ModifierTooltipLine {Text = $"When an enemy dies, they explode for {Properties.RoundedPower}% of your weapon's damage", Color = Color.DarkOrange}
+            new ModifierTooltipLine {Text = $"Bloodsplosion", Color = Color.OrangeRed}
         };
 
         public override ModifierProperties GetModifierProperties(Item item)
@@ -103,7 +100,7 @@ namespace ExtraModifiers.Modifiers.WeaponModifiers
 
         public override void UpdateEquip(Item item, Player player)
         {
-            ModifierPlayer.Player(player).GetEffect<BloodsplosionEffect>().Multiplier += Properties.RoundedPower / 100f;
+            ModifierPlayer.Player(player).GetEffect<BloodsplosionEffect>().isActive = true;
         }
     }
 

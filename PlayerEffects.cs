@@ -10,6 +10,9 @@ using Terraria.DataStructures;
 using Microsoft.Xna.Framework;
 using ExtraModifiers.Projectiles;
 using ExtraModifiers.Modifiers.ArmorModifiers;
+using Loot;
+using ExtraModifiers.Modifiers.AccessoryModifiers;
+using Terraria.ModLoader.IO;
 
 namespace ExtraModifiers
 {
@@ -17,13 +20,23 @@ namespace ExtraModifiers
     {
         public bool initializeShadowProjectile;
         public bool hasShadowPartner;
+        public LinkedList<int> buffExtender = new LinkedList<int>();
+        public int[] buffWatcher;
+        public bool initBuffs;
+
+        public override void Initialize()
+        {
+            buffExtender = new LinkedList<int>();
+            buffWatcher = new int[player.buffType.Length];
+        }
         public void CreateBloodplosion(float X, float Y, int damage)
         {
-            Projectile.NewProjectile(X, Y, 0, 0, mod.ProjectileType("Bloodsplosion"), damage, 0f, Main.myPlayer);
+            Projectile.NewProjectile(X, Y, 0, 0, mod.ProjectileType("Bloodsplosion"), (int)Math.Ceiling(.5*damage), 0f, Main.myPlayer);
         }
         public void createShadowProjectile(Projectile projectile)
         {
-                Projectile.NewProjectile(projectile.position, projectile.velocity, projectile.type, (int)Math.Ceiling(projectile.damage * 0.3f), projectile.knockBack * 0.3f, Main.myPlayer);
+            projectile.noDropItem = true;
+            Projectile.NewProjectile(projectile.position, projectile.velocity, projectile.type, (int)Math.Ceiling(projectile.damage * 0.33f), projectile.knockBack * 0.3f, Main.myPlayer);
         }
         public void setHasShadowPartner(bool isActive)
         {
@@ -39,7 +52,7 @@ namespace ExtraModifiers
                 Player drawPlayer = drawInfo.drawPlayer;
                 Mod mod = ModLoader.GetMod("ExtraModifiers");
                 PlayerEffects modPlayer = drawPlayer.GetModPlayer<PlayerEffects>(mod);
-                if (modPlayer.hasShadowPartner)
+                if (modPlayer.hasShadowPartner && modPlayer.player.statLife > 0)
                 {
                     Texture2D texture = mod.GetTexture("EffectResources/ShadowPartner");
                     int drawX;
@@ -62,10 +75,37 @@ namespace ExtraModifiers
             layers.Insert(0, ShadowPartnerLayer);
         }
 
-        public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
+        public override void PreUpdateBuffs()
         {
-            target.StrikeNPC((int)Math.Ceiling(damage * 0.3f), knockback * 0.3f, -(target.direction), crit);
+            if (initBuffs == false)
+            {
+                for (int i = 0; i < player.buffType.Length; i++)
+                {
+                    if (player.buffType[i] != 0 && Main.debuff[player.buffType[i]] == false)
+                    {
+                        buffWatcher[i] = 1;
+                    }
+                    else
+                        buffWatcher[i] = 0;
+                }
+                initBuffs = true;
+            }
+            else
+            {
+                for (int i = 0; i < player.buffType.Length; i++)
+                {
+                    if (player.buffType[i] != 0 && Main.debuff[player.buffType[i]] == false)
+                    {
+                        if (buffWatcher[i] == 0)
+                        {
+                            buffWatcher[i] = 1;
+                            buffExtender.AddLast(i);
+                        }
+                    }
+                    else
+                        buffWatcher[i] = 0;
+                }
+            }
         }
-
     }
 }

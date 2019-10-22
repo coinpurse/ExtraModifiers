@@ -27,6 +27,14 @@ namespace ExtraModifiers.Modifiers.ArmorModifiers
             Stack = 0;
         }
 
+        [AutoDelegation("OnModifyHitNPC")]
+        public void ShadowPartner_ModifyHitNPC(ModifierPlayer player, Item item, NPC target, ref int damage, ref float knockback, ref bool crit)
+        {
+            if (isActive)
+            {
+                target.StrikeNPC((int)Math.Ceiling(damage * 0.33f), knockback * 0.3f, -(target.direction), crit);
+            }
+        }
         [AutoDelegation("OnPreUpdate")]
         private void ShadowPartner_OnPreUpdate(ModifierPlayer player)
         {

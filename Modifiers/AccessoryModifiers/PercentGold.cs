@@ -53,7 +53,7 @@ namespace ExtraModifiers.Modifiers.AccessoryModifiers
 
         public override ModifierProperties GetModifierProperties(Item item)
         {
-            return base.GetModifierProperties(item).Set(minMagnitude: 2f, maxMagnitude: 15f, rollChance: 2f, uniqueRoll: false);
+            return base.GetModifierProperties(item).Set(minMagnitude: 2f, maxMagnitude: 10f, rollChance: 2f, uniqueRoll: false);
         }
 
         public override bool CanRoll(ModifierContext ctx)

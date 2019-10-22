@@ -25,7 +25,7 @@ namespace ExtraModifiers.Projectiles
         {
             if(projectile.owner == Main.myPlayer && projectile.timeLeft <= 3)
             {
-
+                projectile.netUpdate = true;
                 projectile.tileCollide = false;
                 // Set to transparent. This projectile technically lives as  transparent for about 3 frames
                 projectile.alpha = 255;
@@ -44,7 +44,7 @@ namespace ExtraModifiers.Projectiles
         {
             if(target.life <= 0)
             {
-                Projectile.NewProjectile(target.position.X, target.position.Y, 0, 0, mod.ProjectileType("Bloodsplosion"), damage, 0f, Main.myPlayer);
+                Projectile.NewProjectile(target.position.X, target.position.Y, 0, 0, mod.ProjectileType("Bloodsplosion"), (int)Math.Ceiling(.5*damage), 0f, Main.myPlayer);
             }
         }
         
