@@ -71,7 +71,7 @@ namespace ExtraModifiers.Modifiers.ArmorModifiers
     {
         public override ModifierTooltipLine[] TooltipLines => new[]
         {
-            new ModifierTooltipLine {Text = $"3 seconds after being hit, heal for +" + Properties.RoundedPower.ToString() + "% of the damage taken", Color = Color.White}
+            new ModifierTooltipLine {Text = $"3 seconds after being hit, heal for +" + Properties.RoundedPower.ToString() + "% of the damage taken", Color = Color.Lime}
         };
 
         public override ModifierProperties GetModifierProperties(Item item)

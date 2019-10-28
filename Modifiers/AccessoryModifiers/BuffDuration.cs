@@ -24,15 +24,14 @@ namespace ExtraModifiers.Modifiers.AccessoryModifiers
             percentBuffDuration = 0f;
         }
         [AutoDelegation("OnPreUpdate")]
-        private void LifeOnHurt_OnPreUpdate(ModifierPlayer player)
+        private void BuffDuration_OnPreUpdate(ModifierPlayer player)
         {
             int index;
-            ModifierPlayer mplr = player.player.GetModPlayer<ModifierPlayer>();
             PlayerEffects mplrEffects = player.player.GetModPlayer<PlayerEffects>();
-            while (mplrEffects.buffExtender.Count > 0 && mplr.GetEffect<BuffDurationEffect>().percentBuffDuration > 0f)
+            while (mplrEffects.buffExtender.Count > 0 && percentBuffDuration > 0f)
             {
                 index = mplrEffects.buffExtender.First.Value;
-                player.player.buffTime[index] = (int)Math.Ceiling(player.player.buffTime[index] + (player.player.buffTime[index] * mplr.GetEffect<BuffDurationEffect>().percentBuffDuration));
+                player.player.buffTime[index] = (int)Math.Ceiling(player.player.buffTime[index] + (player.player.buffTime[index] * percentBuffDuration));
                 mplrEffects.buffExtender.RemoveFirst();
             }
         }
@@ -45,7 +44,7 @@ namespace ExtraModifiers.Modifiers.AccessoryModifiers
     {
         public override ModifierTooltipLine[] TooltipLines => new[]
 {
-            new ModifierTooltipLine {Text = Properties.RoundedPower.ToString() + "% buff duration", Color = Color.White}
+            new ModifierTooltipLine {Text = Properties.RoundedPower.ToString() + "% buff duration", Color = Color.Lime}
         };
 
         public override ModifierProperties GetModifierProperties(Item item)

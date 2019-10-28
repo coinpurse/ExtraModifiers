@@ -22,9 +22,8 @@ namespace ExtraModifiers.Modifiers.AccessoryModifiers
         {
             percentResist = 0f;
         }
-        public bool attemptResist()
+        public bool AttemptResist()
         {
-            int i;
             if(percentResist == 0)
             {
                 return false;
@@ -41,6 +40,20 @@ namespace ExtraModifiers.Modifiers.AccessoryModifiers
            
         }
 
+        [AutoDelegation("OnPreUpdate")]
+        private void DebuffResist_OnPreUpdate(ModifierPlayer player)
+        {
+            PlayerEffects mplrEffects = player.player.GetModPlayer<PlayerEffects>();
+            while (mplrEffects.buffResistor.Count > 0 && percentResist > 0f)
+            {
+                if (AttemptResist())
+                {
+                    player.player.DelBuff(mplrEffects.buffResistor.First.Value);
+                }
+                mplrEffects.buffResistor.RemoveFirst();
+            }
+        }
+
     }
     
     [UsesEffect(typeof(DebuffResistEffect))]
@@ -48,12 +61,12 @@ namespace ExtraModifiers.Modifiers.AccessoryModifiers
     {
         public override ModifierTooltipLine[] TooltipLines => new[]
         {
-            new ModifierTooltipLine {Text = Properties.RoundedPower.ToString() + "% chance to resist debuffs", Color = Color.White}
+            new ModifierTooltipLine {Text = Properties.RoundedPower.ToString() + "% chance to resist debuffs", Color = Color.Lime}
         };
 
         public override ModifierProperties GetModifierProperties(Item item)
         {
-            return base.GetModifierProperties(item).Set(minMagnitude: 1f, maxMagnitude: 10f, rollChance: 2f, uniqueRoll: false);
+            return base.GetModifierProperties(item).Set(minMagnitude: 2f, maxMagnitude: 10f, rollChance: 2f, uniqueRoll: false);
         }
 
         public override bool CanRoll(ModifierContext ctx)

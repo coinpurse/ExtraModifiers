@@ -20,13 +20,15 @@ namespace ExtraModifiers
     {
         public bool initializeShadowProjectile;
         public bool hasShadowPartner;
-        public LinkedList<int> buffExtender = new LinkedList<int>();
+        public LinkedList<int> buffExtender;
+        public LinkedList<int> buffResistor;
         public int[] buffWatcher;
         public bool initBuffs;
 
         public override void Initialize()
         {
             buffExtender = new LinkedList<int>();
+            buffResistor = new LinkedList<int>();
             buffWatcher = new int[player.buffType.Length];
         }
         public void CreateBloodplosion(float X, float Y, int damage)
@@ -51,7 +53,7 @@ namespace ExtraModifiers
                 }
                 Player drawPlayer = drawInfo.drawPlayer;
                 Mod mod = ModLoader.GetMod("ExtraModifiers");
-                PlayerEffects modPlayer = drawPlayer.GetModPlayer<PlayerEffects>(mod);
+                PlayerEffects modPlayer = drawPlayer.GetModPlayer<PlayerEffects>();
                 if (modPlayer.hasShadowPartner && modPlayer.player.statLife > 0)
                 {
                     Texture2D texture = mod.GetTexture("EffectResources/ShadowPartner");
@@ -77,11 +79,13 @@ namespace ExtraModifiers
 
         public override void PreUpdateBuffs()
         {
+            // If the buffWatcher hasn't been initialized, initialize it buy adding 1 to the buffWatcher at that index if the player has a buff at that index,
+            // otherwise add 0 to the index
             if (initBuffs == false)
             {
                 for (int i = 0; i < player.buffType.Length; i++)
                 {
-                    if (player.buffType[i] != 0 && Main.debuff[player.buffType[i]] == false)
+                    if (player.buffType[i] != 0)
                     {
                         buffWatcher[i] = 1;
                     }
@@ -90,16 +94,28 @@ namespace ExtraModifiers
                 }
                 initBuffs = true;
             }
-            else
+            else  // When the buffWatcher has been initialized, keep checking for new buffs to appear, handle them accordingly.
             {
                 for (int i = 0; i < player.buffType.Length; i++)
                 {
-                    if (player.buffType[i] != 0 && Main.debuff[player.buffType[i]] == false)
+                    if (player.buffType[i] != 0)
                     {
                         if (buffWatcher[i] == 0)
                         {
-                            buffWatcher[i] = 1;
-                            buffExtender.AddLast(i);
+                            if (Main.debuff[player.buffType[i]] == false)
+                            { // Is a buff
+                              // A new buff has been found             
+                                buffWatcher[i] = 1;
+                                buffExtender.AddLast(i);
+                            }
+                            else    // Is a debuff
+                            {
+                                buffWatcher[i] = 2;
+                                if (player.buffType[i] != 21)   // Don't resist potion sickness
+                                {
+                                    buffResistor.AddLast(i);
+                                }
+                            }
                         }
                     }
                     else

@@ -48,7 +48,7 @@ namespace ExtraModifiers.Modifiers.AccessoryModifiers
     {
         public override ModifierTooltipLine[] TooltipLines => new[]
 {
-            new ModifierTooltipLine {Text = $"Enemies drop +" + Properties.RoundedPower.ToString() + "% more gold", Color = Color.Gold}
+            new ModifierTooltipLine {Text = $"Enemies drop +" + Properties.RoundedPower.ToString() + "% more gold", Color = Color.Lime}
         };
 
         public override ModifierProperties GetModifierProperties(Item item)

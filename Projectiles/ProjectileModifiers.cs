@@ -29,7 +29,7 @@ namespace ExtraModifiers.Projectiles
         public ProjectileModifiers Info(Projectile projectile, Mod mod = null)
             => mod == null
                 ? projectile.GetGlobalProjectile<ProjectileModifiers>()
-                : projectile.GetGlobalProjectile<ProjectileModifiers>(mod);
+                : projectile.GetGlobalProjectile<ProjectileModifiers>();
                 
         
         public override bool PreAI(Projectile projectile)
