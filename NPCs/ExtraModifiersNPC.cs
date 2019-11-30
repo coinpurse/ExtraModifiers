@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ExtraModifiers.Modifiers.WeaponModifiers;
+using Loot;
+using Loot.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,17 +13,12 @@ namespace TestMod.NPCs
 {
     class ExtraModifiersNPC : GlobalNPC
     {
-        public static float spawnMultiplier = 1f;
 
         public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns)
         {
-            spawnRate = (int)(spawnRate / spawnMultiplier);
-            maxSpawns = (int)(maxSpawns * spawnMultiplier);
-        }
-
-        public static void resetSpawnRate()
-        {
-            spawnMultiplier = 1f;
+            BloodthirstyEffect bloodthirsty = player.GetModPlayer<ModifierPlayer>().GetEffect<BloodthirstyEffect>();
+            spawnRate = (int)(spawnRate / bloodthirsty.spawnRateMultiplier);
+            maxSpawns = (int)(maxSpawns * bloodthirsty.spawnMaxMultiplier);
         }
     }
 }

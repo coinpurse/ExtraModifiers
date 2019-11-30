@@ -1,6 +1,6 @@
 author = Coinpurse
 version = 0.1
-displayName = Example Mod
+displayName = Extra Modifiers
 languageVersion = 6
 hideCode = false
 hideResources = false

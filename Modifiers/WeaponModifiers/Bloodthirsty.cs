@@ -18,10 +18,14 @@ namespace ExtraModifiers.Modifiers.WeaponModifiers
         public bool isActive;
         public int numOfKills;
         public int rampageDuration;
+        public float spawnRateMultiplier;
+        public float spawnMaxMultiplier;
 
         public override void OnInitialize(ModifierPlayer player)
         {
             numOfKills = 0;
+            spawnRateMultiplier = 1f;
+            spawnMaxMultiplier = 1f;
         }
         public override void ResetEffects(ModifierPlayer player)
         {
@@ -68,14 +72,20 @@ namespace ExtraModifiers.Modifiers.WeaponModifiers
                 if (rampageDuration > 900)
                 {
                     rampageDuration = 0;
-                    ExtraModifiersNPC.resetSpawnRate();
+                    resetSpawns();
                  }
              }
             else
             {
                 rampageDuration = 0;
-                ExtraModifiersNPC.resetSpawnRate();
+                resetSpawns();
             }
+        }
+
+        public void resetSpawns()
+        {
+            spawnRateMultiplier = 1f;
+            spawnMaxMultiplier = 1f;
         }
 
         public void StartRampage(NPC target)
@@ -87,7 +97,8 @@ namespace ExtraModifiers.Modifiers.WeaponModifiers
                 if (numOfKills >= 5)
                 {
                     numOfKills = 0;
-                    ExtraModifiersNPC.spawnMultiplier += .25f;
+                    spawnRateMultiplier += .25f;
+                    spawnMaxMultiplier += 1f;
                 }
             }
         }
